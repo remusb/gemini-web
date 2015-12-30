@@ -26,7 +26,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('DB_CONNECTION', 'mongodb'),
 
     /*
     |--------------------------------------------------------------------------
@@ -45,6 +45,18 @@ return [
     */
 
     'connections' => [
+
+        'mongodb' => array(
+            'driver'   => 'mongodb',
+            'host'     => env('DB_HOST', '192.168.0.11'),
+            'port'     => env('DB_PORT', 27017),
+            'database' => env('DB_DATABASE', 'gemini_web'),
+            'username' => env('DB_USERNAME', 'gemini'),
+            'password' => env('DB_PASSWORD', 'gemini'),
+            // 'options' => array(
+            //     'db' => 'admin' // sets the authentication database required by mongo 3
+            // )
+        ),
 
         'sqlite' => [
             'driver'   => 'sqlite',

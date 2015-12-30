@@ -6,7 +6,12 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
-        "laravel/framework": "5.1.*"
+        "laravel/framework": "5.1.*",
+        "jenssegers/mongodb": "^2.2",
+        "laravel/socialite": "^2.0",
+        "facebook/php-sdk-v4" : "~5.0",
+        "abraham/twitteroauth": "^0.6.1",
+        "pda/pheanstalk": "~3.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

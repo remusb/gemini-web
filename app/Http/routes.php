@@ -11,6 +11,24 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Authentication routes...
+Route::group(['prefix' => 'auth', 'namespace' => 'Auth'], function () {
+  Route::get('login', 'AuthController@getLogin');
+  Route::post('login', 'AuthController@postLogin');
+  Route::get('logout', 'AuthController@getLogout');
+
+  Route::get('register', 'AuthController@getRegister');
+  Route::post('register', 'AuthController@postRegister');
 });
+
+// $app->group(['prefix' => 'api/v1/{service}','namespace' => 'App\Http\Controllers'], function($app)
+// {
+//   $app->get('saveToken/{user_id}', 'ServiceController@saveToken');
+// });
+
+Route::controller('/profiles', 'ProfilesController');
+Route::controller('/', 'HomeController');
+
+// Route::get('/', ['middleware' => 'auth', function() {
+//     return view('dashboard');
+// }]);
