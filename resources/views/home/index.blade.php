@@ -44,10 +44,11 @@
     <div class="row text-center">
       <span class="lead">{{ $profiles[$profileId]['name'] }}</span>
 
-      @foreach ($services as $service)
+      <?php foreach ($services as $service): ?>
+        <?php if (in_array($service['service'], ['google', 'instagram'])) continue; ?>
         <a class="off btn btn-social-icon btn-{{ $service['service'] }} publish-service" href="#"><i class="fa fa-{{ $service['service'] }}"></i></a>
         <input type="hidden" name="services[{{ $service['_id'] }}]" value="0" />
-      @endforeach
+      <?php endforeach ?>
     </div><!-- /.row -->
     @endforeach
 

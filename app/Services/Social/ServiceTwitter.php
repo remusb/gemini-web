@@ -186,9 +186,7 @@ class ServiceTwitter implements ISocialService {
    * @return mixed
    */
   public function postLink($provider_id, $link, $opts = []) {
-    $params = [ 'status' => $link ];
-
-    return $this->post($provider_id, $params, $opts);
+    return $this->postMessage($provider_id, $link, $opts);
   }
 
   /**
@@ -215,6 +213,13 @@ class ServiceTwitter implements ISocialService {
     return true;
   }
 
+  /**
+   * Retrieve user info from Twitter
+   *
+   * @param $provider_id string
+   * @return array|object
+   * @throws \Exception
+   */
   public function getUserInfo($provider_id) {
     $this->prepareRequest($provider_id);
 

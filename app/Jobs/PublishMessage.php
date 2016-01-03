@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Jobs\Job;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Bus\SelfHandling;
@@ -20,7 +19,7 @@ class PublishMessage extends Job implements SelfHandling, ShouldQueue
     /**
      * Create a new job instance.
      *
-     * @return void
+     * @param Post $post
      */
     public function __construct(Post $post)
     {
@@ -29,12 +28,15 @@ class PublishMessage extends Job implements SelfHandling, ShouldQueue
 
     /**
      * Execute the job.
-     *
-     * @return void
      */
     public function handle()
     {
-        $service = SocialService::get($this->post->service);
+      $service = SocialService::get($this->post->service);
+
+      if (filter_var($this->post->message, FILTER_VALIDATE_URL) !== false) {
+        $service->postLink($this->post->provider_id, $this->post->message);
+      } else {
         $service->postMessage($this->post->provider_id, $this->post->message);
+      }
     }
 }
