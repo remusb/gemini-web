@@ -38,6 +38,7 @@
     <a class="btn btn-social-icon btn-facebook register-profile" href="/profiles/redirect?source=facebook&amp;profile={{ $profile['_id'] }}"><i class="fa fa-facebook"></i></a>
     <a class="btn btn-social-icon btn-twitter register-profile" href="/profiles/redirect?source=twitter&amp;profile={{ $profile['_id'] }}"><i class="fa fa-twitter"></i></a>
     <a class="btn btn-social-icon btn-google register-profile" href="/profiles/redirect?source=google&amp;profile={{ $profile['_id'] }}"><i class="fa fa-google-plus"></i></a>
+    <a class="btn btn-social-icon btn-linkedin register-profile" href="/profiles/redirect?source=linkedin&amp;profile={{ $profile['_id'] }}"><i class="fa fa-linkedin"></i></a>
     <a class="delete-profile" href="#"><i class="fa fa-fw fa-remove"></i></a>
   </div><!-- /.row -->
   @endforeach

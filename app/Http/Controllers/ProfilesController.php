@@ -13,52 +13,93 @@ use Session;
 use Config;
 
 class ProfilesController extends Controller {
+
+  /**
+   * The Profile Repository
+   *
+   * @var \App\Repositories\ProfileRepository
+   */
   protected $profileRepository;
 
+  /**
+   * Create a new Home controller
+   *
+   * @param  \App\Repositories\ProfileRepository  $profileRepository
+   */
   public function __construct(ProfileRepository $profileRepository) {
     $this->middleware('auth');
 
     $this->profileRepository = $profileRepository;
   }
 
+  /**
+   * GET: /profiles
+   *
+   * @return view(profiles.index)
+   */
   public function getIndex() {
     $user = Auth::user();
-    $profiles = $user->profiles()->get()->keyBy('id');
+    $profiles = $this->profileRepository->getFromUser($user);
 
     return view('profiles.index', ['profiles' => $profiles]);
   }
 
+  /**
+   * POST: /profiles
+   *
+   * @return redirect(/profiles)
+   */
   public function postIndex() {
     $profileName = Input::get('profile_name');
 
-    $this->profileRepository->addProfile(Auth::user()->id, $profileName);
+    $this->profileRepository->create(Auth::user()->id, $profileName);
 
-    return Redirect::back()
-      ->withInput();
+    return redirect('/profiles');
   }
 
+  /**
+   * DELETE: /profiles
+   *
+   * @return redirect(/profiles)
+   */
   public function deleteIndex() {
     $profileId = Input::get('profile_id');
 
-    $this->profileRepository->deleteProfile($profileId);
+    $this->profileRepository->delete($profileId);
   }
 
+  /**
+   * GET: /profiles/redirect
+   *
+   * @return redirect(CLIENT_URL)
+   */
   public function getRedirect() {
     $provider = Input::get('source');
     $profile_id = Input::get('profile');
     $service = SocialService::get($provider);
 
-    Session::put('profile_id', $profile_id);
+    $redirectUrl = $service->getRedirectUrl();
+    $state = $service->getState();
 
-    return redirect($service->getRedirectUrl($profile_id));
+    Session::put('profile_id', $profile_id);
+    Session::put('local_state', $state);
+
+    return redirect($redirectUrl);
   }
 
+  /**
+   * GET: /profiles/callback
+   *
+   * @return redirect(/profiles)
+   */
   public function getCallback() {
     $provider = Input::get('source');
     $user_id = Auth::user()->id;
     $service = SocialService::get($provider);
 
-    $service->handleCallback($user_id, Session::get('profile_id'), Input::all());
+    $params = array_merge(Input::all(), ['local_state' => Session::get('local_state'), 'state' => Input::get('state', '')]);
+
+    $service->handleCallback($user_id, Session::get('profile_id'), $params);
 
     return redirect('/profiles');
   }

@@ -26,11 +26,19 @@ class SocialServiceProvider extends ServiceProvider
     {
         // Binding singleton services
         $this->app->singleton('ServiceFacebook', function ($app) {
-            return new App\Services\Social\ServiceFacebook($app['App\Repositories\Social\RepositoryFacebook']);
+            return new App\Services\Social\ServiceFacebook($app['App\Repositories\ProviderRepository']);
         });
 
         $this->app->singleton('ServiceTwitter', function ($app) {
-            return new App\Services\Social\ServiceTwitter($app['App\Repositories\Social\RepositoryTwitter']);
+            return new App\Services\Social\ServiceTwitter($app['App\Repositories\ProviderRepository']);
+        });
+
+        $this->app->singleton('ServiceGoogle', function ($app) {
+            return new App\Services\Social\ServiceGoogle($app['App\Repositories\ProviderRepository']);
+        });
+
+        $this->app->singleton('ServiceLinkedin', function ($app) {
+            return new App\Services\Social\ServiceLinkedin($app['App\Repositories\ProviderRepository']);
         });
 
         // Binding service factory instance
@@ -40,7 +48,6 @@ class SocialServiceProvider extends ServiceProvider
 
     public function provides()
     {
-        return [App\Repositories\Social\RepositoryFacebook::class, App\Repositories\Social\RepositoryTwitter::class, 
-            App\Services\Social\ServiceFacebook::class, App\Services\Social\ServiceTwitter::class];
+        return [App\Services\Social\ServiceFacebook::class, App\Services\Social\ServiceTwitter::class, App\Services\Social\ServiceGoogle::class];
     }
 }

@@ -11,7 +11,12 @@
         "laravel/socialite": "^2.0",
         "facebook/php-sdk-v4" : "~5.0",
         "abraham/twitteroauth": "^0.6.1",
-        "pda/pheanstalk": "~3.0"
+        "pda/pheanstalk": "~3.0",
+        "google/apiclient": "^2.0.0@RC",
+        "league/oauth2-linkedin": "^0.4.0",
+        "barryvdh/laravel-ide-helper": "^2.1",
+        "league/oauth2-facebook": "^1.1",
+        "league/oauth2-google": "^1.0"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -35,6 +35,6 @@ class PublishMessage extends Job implements SelfHandling, ShouldQueue
     public function handle()
     {
         $service = SocialService::get($this->post->service);
-        $service->publish($this->post->provider_id, $this->post->message);
+        $service->postMessage($this->post->provider_id, $this->post->message);
     }
 }
